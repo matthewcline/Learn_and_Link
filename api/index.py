@@ -19,7 +19,7 @@ claude = anthropic.Client(os.environ.get('ANTHROPIC_API_KEY'))
 co = cohere.Client(os.environ.get('COHERE_API_KEY'))
 
 
-USERNAME = "shah.jaidev00@gmail.com"
+USERNAME = "test.hackgpt.lnl@gmail.com"
 PASSWORD = os.environ.get('LINKEDIN_PASSWORD')
 
 myAPIWrapper = MyLinkedInAPI(USERNAME, PASSWORD)
