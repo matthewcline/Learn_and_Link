@@ -11,7 +11,7 @@ PASSWORD = os.environ.get('LINKEDIN_PASSWORD')
 
 class MyLinkedInAPI:
     def __init__(self, username, password):
-        self.api = Linkedin('shahjaidevn@gmail.com', password)
+        self.api = Linkedin('shah.jaidev00@gmail.com', password)
         self.username = username
         self.password = password
         self.api = Linkedin(username, password)

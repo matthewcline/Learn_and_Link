@@ -1,9 +1,9 @@
 # Import Flask and request libraries
 from flask import Flask, request
 # Import Anthropic Claude API
-from anthropic import Claude
+from anthropic import Client
 
-from customized_linkedinAPI import LinkedIn
+# from customized_linkedinAPI import LinkedIn
 import os
 
 from LinkedInAPI import MyLinkedInAPI
@@ -11,13 +11,13 @@ from LinkedInAPI import MyLinkedInAPI
 app = Flask(__name__)
 
 # Create a Claude instance with your API key
-claude = Claude(api_key="your_api_key")
+claude = Client(api_key="your_api_key")
 
 USERNAME = "shahjaidev"
 PASSWORD = os.environ.get('LINKEDIN_PASSWORD')
 
 
-linkedinAPIinstance = LinkedInAPI(USERNAME, PASSWORD)
+linkedinAPIinstance = MyLinkedInAPI(USERNAME, PASSWORD)
 
 # Define a route for the app
 @app.route("/", methods=["POST"])
