@@ -220,7 +220,7 @@ class MyLinkedInAPI:
 
         #ensure profile_name is not in the list
         
-
+        print("Calling Cohere rerank to rerank the profiles based on similarity to the user intent")
         reranked_results = co.rerank(query=query, documents=bfs_recalled_profiles_jsons_list, top_n=10, model='rerank-english-v2.0')
 
         cleaned_reranked_results_dict = {}
