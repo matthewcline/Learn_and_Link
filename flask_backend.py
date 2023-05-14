@@ -32,14 +32,13 @@ def index():
 
 
 
-# Define a route for getting recommended profiles
 @app.route("/recommended_profiles", methods=["POST"])
 def recommended_profiles():
     user_free_form_text = request.get_json().get("user_free_form_text")
     user_linkedin_profile_url = request.get_json().get("user_linkedin_profile_url")
     profile_name = user_linkedin_profile_url.split("/")[-1]
-    myAPIWrapper.recommended_profiles(user_free_form_text, profile_name)
-    return recommended_profiles
+    recommended_profiles_dict = myAPIWrapper.rerank_summarized_profiles_for_recommendation(profile_name, user_free_form_text, top_K = 5, read_from_pickle = True)
+    return recommended_profiles_dict
 
 # Define a route for generating a cover letter
 @app.route("/cover-letter", methods=["POST"])
