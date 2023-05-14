@@ -2,3 +2,5 @@ linkedin-api
 anthropic
 cohere 
 flask 
+linkedin_scraper
+selenium
