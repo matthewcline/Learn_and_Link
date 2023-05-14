@@ -1,7 +1,7 @@
 # Import Flask and request libraries
 from flask import Flask, request
 # Import Anthropic Claude API
-from anthropic import Client
+import anthropic
 
 # from customized_linkedinAPI import LinkedIn
 import os
@@ -11,13 +11,13 @@ from LinkedInAPI import MyLinkedInAPI
 app = Flask(__name__)
 
 # Create a Claude instance with your API key
-claude = Client(api_key="your_api_key")
+claude = anthropic.Client(os.environ.get('ANTHROPIC_API_KEY'))
 
 USERNAME = "shahjaidev"
 PASSWORD = os.environ.get('LINKEDIN_PASSWORD')
 
 
-linkedinAPIinstance = MyLinkedInAPI(USERNAME, PASSWORD)
+# linkedinAPIinstance = MyLinkedInAPI(USERNAME, PASSWORD)
 
 # Define a route for the app
 @app.route("/", methods=["POST"])
@@ -31,7 +31,7 @@ def index():
 
 
 # Define a route for getting recommended profiles
-@app.route("/recommended_profiles", methods=["GET"])
+# @app.route("/recommended_profiles", methods=["GET"])
 def recommended_profiles():
 
     return recommended_profiles
@@ -62,7 +62,28 @@ def cover_letter():
     # Return the cover letter as a PDF file
     return cover_letter
 
+@app.route("/intro", methods=["POST"])
+def intro():
+    candidate_summary = request.get_json().get("candidate_summary")
+    lead_summary = request.get_json().get("lead_summary")
+    aspiration = request.get_json().get("aspiration")
 
+    prompt = f"Pretend like you are a warm and welcoming recruiter.  Write a concise introduction message from a candidate to a lead." \
+             f"Here are the descriptions for each the candidate and the lead:\n\n" \
+                f"Candidate: {candidate_summary}\n\n" \
+                f"Lead: {lead_summary}" \
+                f"And here is the candidate's aspiration: {aspiration}"
+    
+    # Call the Claude API to generate an intro
+    max_tokens_to_sample: int = 1000
+    resp = claude.completion(
+        prompt=f"{anthropic.HUMAN_PROMPT} {prompt}{anthropic.AI_PROMPT}",
+        stop_sequences=[anthropic.HUMAN_PROMPT],
+        model="claude-v1",
+        max_tokens_to_sample=max_tokens_to_sample,
+    )
+
+    return resp['completion']
 
 
 def summarize_linkedin_profile(profile_dict):
