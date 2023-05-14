@@ -122,7 +122,8 @@ class MyLinkedInAPI:
         lead_profile_name = lead_profile_url.split("/")[-1]
         lead_summary = self.get_cleaned_profile_summary(lead_profile_name)
 
-
+        print("Candidate Summary")
+        print(candidate_summary)
         prompt = f"Assume you are a candidate looking for a job.  Write a warm personalized introduction message to the lead profile, that includes commonalities between the two of you, relevance to their own work and title, and and explaining why your skills would be a good fit for his team and the role you are interested in." \
                 f"Here are the descriptions for each the candidate and the lead:\n\n" \
                     f"Candidate: {candidate_summary}\n\n" \

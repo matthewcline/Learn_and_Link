@@ -89,6 +89,7 @@ def intro():
     lead_summary = request.get_json().get("lead_linkedin_profile_url")
     lead_profile_name = lead_summary.split("/")[-1]
 
+    print("generating intro...")
     generated_intro = myAPIWrapper.intro_generation(candidate_profile_name, lead_profile_name, user_free_form_text)
 
     return generated_intro
